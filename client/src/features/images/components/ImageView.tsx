@@ -1,7 +1,8 @@
+// src/features/images/components/ImageView.tsx
 import React from 'react';
 
 interface ImageViewProps {
-  imageData: string; // Change imagePath to imageData
+  imageData: string;
 }
 
 const ImageView: React.FC<ImageViewProps> = ({ imageData }) => {
@@ -13,5 +14,3 @@ const ImageView: React.FC<ImageViewProps> = ({ imageData }) => {
 };
 
 export default ImageView;
-
-

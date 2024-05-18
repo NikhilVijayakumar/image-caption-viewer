@@ -1,5 +1,6 @@
-// src/components/Navigation.tsx
+// src/features/images/components/Navigation.tsx
 import React from 'react';
+import '../../../App.css';
 
 interface NavigationProps {
   onNext: () => void;
@@ -8,7 +9,7 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ onNext, onPrevious }) => {
   return (
-    <div>
+    <div className="button-container">
       <button onClick={onPrevious}>Previous</button>
       <button onClick={onNext}>Next</button>
     </div>

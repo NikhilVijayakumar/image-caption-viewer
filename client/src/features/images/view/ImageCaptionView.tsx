@@ -4,9 +4,10 @@ import { useImageViewModel } from '../viewmodel/ImageViewModel';
 import ImageView from '../components/ImageView';
 import Caption from '../components/Caption';
 import Navigation from '../components/Navigation';
+import '../../../App.css';
 
 const ImageCaptionView: React.FC = () => {
-  const { images, imageDetails, currentIndex, nextImage, prevImage } = useImageViewModel();
+  const { images, imageDetails, currentIndex, nextImage, prevImage, saveCaption } = useImageViewModel();
 
   if (images.length === 0) {
     return <div>Loading...</div>;
@@ -15,9 +16,9 @@ const ImageCaptionView: React.FC = () => {
   const { caption } = images[currentIndex];
 
   return (
-    <div>
+    <div className="container">
       <ImageView imageData={imageDetails} />
-      <Caption text={caption} />
+      <Caption text={caption} onSave={saveCaption} />
       <Navigation onNext={nextImage} onPrevious={prevImage} />
     </div>
   );

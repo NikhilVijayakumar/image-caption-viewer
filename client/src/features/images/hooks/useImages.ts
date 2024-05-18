@@ -1,6 +1,6 @@
 // src/features/images/hooks/useImages.ts
 import { useState, useEffect } from 'react';
-import { fetchImages, fetchImageDetails, ImageData } from '../../../services/api';
+import { fetchImages, fetchImageDetails, updateCaption, ImageData } from '../../../services/api';
 
 export const useImages = () => {
   const [images, setImages] = useState<ImageData[]>([]);
@@ -36,11 +36,22 @@ export const useImages = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
+  const saveCaption = async (newCaption: string) => {
+    const { filename } = images[currentIndex];
+    await updateCaption(filename, newCaption);
+    setImages((prevImages) =>
+      prevImages.map((img, index) =>
+        index === currentIndex ? { ...img, caption: newCaption } : img
+      )
+    );
+  };
+
   return {
     images,
     imageDetails,
     currentIndex,
     nextImage,
-    prevImage
+    prevImage,
+    saveCaption,
   };
 };

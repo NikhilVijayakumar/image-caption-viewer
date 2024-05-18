@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import imageRoutes from './routes/imageRoutes';
 import dotenv from 'dotenv';
+import getImagesRoutes from './features/images/routes/ImagesRoutes';
+import getImageDetailsRoutes from './features/imagesDetails/routes/ImageDetailsRoutes';
+import updateCaptionRoutes from './features/captions/routes/CaptionsRoutes';
 
 dotenv.config();
 
@@ -14,19 +16,11 @@ app.use(cors());
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-const imageFolder = process.env.IMAGE_FOLDER_PATH;
-if (!imageFolder) {
-  throw new Error('IMAGE_FOLDER_PATH environment variable is not defined');
-}
-app.use('/images', express.static(imageFolder));
-
 // API routes
-app.use('/api/images', imageRoutes);
+app.use('/api/images', getImagesRoutes);
+app.use('/api/image/details', getImageDetailsRoutes);
+app.use('/api/image/captions', updateCaptionRoutes);
 
-// Default route
-app.get('/', (req, res) => {
-  res.send('Image Caption Viewer API');
-});
 
 // Start server
 app.listen(PORT, () => {

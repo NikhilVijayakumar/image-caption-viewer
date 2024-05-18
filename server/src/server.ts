@@ -1,5 +1,3 @@
-// src/server.ts
-// src/server.ts
 import express from 'express';
 import cors from 'cors';
 import imageRoutes from './routes/imageRoutes';
@@ -8,10 +6,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 
 // Enable CORS for all origins (or specify your frontend origin)
 app.use(cors());
+
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 const imageFolder = process.env.IMAGE_FOLDER_PATH;
 if (!imageFolder) {
@@ -31,4 +32,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-

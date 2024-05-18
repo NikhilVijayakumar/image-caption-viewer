@@ -1,6 +1,6 @@
 // src/controllers/imageController.ts
 import { Request, Response } from 'express';
-import { readImagesAndCaptions, getImageBase64Data } from '../utils/fileUtils';
+import { readImagesAndCaptions, getImageBase64Data,updateCaption } from '../utils/fileUtils';
 
 export const getImages = (req: Request, res: Response) => {
   const images = readImagesAndCaptions();
@@ -15,6 +15,21 @@ export const getImageDetails = (req: Request, res: Response) => {
     res.json(imageData);
   } catch (error) {
     res.status(404).send('Image not found');
+  }
+};
+
+export const updateImageCaption = (req: Request, res: Response) => {
+  const { filename, caption } = req.body;
+
+  if (!filename || !caption) {
+    return res.status(400).send('Filename and caption are required');
+  }
+
+  try {
+    updateCaption(filename, caption);
+    res.sendStatus(200);
+  } catch (error) {
+    res.status(500).send('Failed to update caption');
   }
 };
 

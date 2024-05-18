@@ -9,9 +9,10 @@ interface ImageData {
   filename: string; // Change imagePath to filename
   caption: string;
 }
+const imageFolder = process.env.IMAGE_FOLDER_PATH;
 
 export const readImagesAndCaptions = (): ImageData[] => {
-  const imageFolder = process.env.IMAGE_FOLDER_PATH;
+
   if (!imageFolder) {
     throw new Error('IMAGE_FOLDER_PATH environment variable is not defined');
   }
@@ -48,6 +49,17 @@ export const getImageBase64Data = (filename: string): string => {
   } else {
     throw new Error('Image not found');
   }
+};
+
+export const updateCaption = (filename: string, newCaption: string): void => {
+  
+  if (!imageFolder) {
+    throw new Error('IMAGE_FOLDER_PATH environment variable is not defined');
+  }
+
+  const imageName = path.parse(filename).name;
+  const captionPath = path.join(imageFolder, `${imageName}.txt`);
+  fs.writeFileSync(captionPath, newCaption, 'utf-8');
 };
 
 
